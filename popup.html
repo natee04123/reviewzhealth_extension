@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      width: 280px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #F5F4F0;
+      color: #1A1A18;
+    }
+    .header {
+      background: #1A1A18;
+      padding: 16px 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .logo {
+      font-family: Georgia, serif;
+      font-size: 16px;
+      color: #F7F5EF;
+    }
+    .logo span { color: #1D9E75; }
+    .body { padding: 16px 18px; }
+    .status-card {
+      background: #fff;
+      border: 1px solid #E5E3DC;
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-bottom: 14px;
+    }
+    .status-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 6px;
+    }
+    .status-label {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #888780;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+    }
+    .status-value {
+      font-size: 13px;
+      color: #1A1A18;
+      font-weight: 500;
+    }
+    .status-sub {
+      font-size: 11px;
+      color: #888780;
+      margin-top: 2px;
+    }
+    .platforms {
+      background: #fff;
+      border: 1px solid #E5E3DC;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 14px;
+    }
+    .platform-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      border-bottom: 1px solid #F0EEE8;
+      font-size: 12px;
+    }
+    .platform-row:last-child { border-bottom: none; }
+    .platform-name { font-weight: 500; color: #1A1A18; }
+    .platform-status { font-size: 11px; }
+    .active { color: #1D9E75; }
+    .pending { color: #BA7517; }
+    .footer {
+      font-size: 11px;
+      color: #888780;
+      text-align: center;
+    }
+    .footer a {
+      color: #1D9E75;
+      text-decoration: none;
+    }
+    .not-authed {
+      text-align: center;
+      padding: 8px 0;
+    }
+    .not-authed p {
+      font-size: 12px;
+      color: #888780;
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      background: #1A1A18;
+      color: #F7F5EF;
+      border: none;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+    }
+    .count-badge {
+      background: #1D9E75;
+      color: #fff;
+      border-radius: 99px;
+      padding: 1px 7px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo">reviewz<span>health</span></div>
+  </div>
+  <div class="body" id="body">
+    <div style="text-align:center;padding:20px 0;color:#888780;font-size:13px;">
+      Loading...
+    </div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>
