@@ -1,7 +1,7 @@
 const API_BASE = 'https://reviewzhealthbackend-production.up.railway.app';
 
-// Listen for token from reviewzhealth.com
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+
   if (message.type === 'SET_TOKEN' && message.token) {
     chrome.storage.local.set({ rzh_token: message.token });
     return;
@@ -18,11 +18,13 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     chrome.storage.local.get('rzh_token', async (data) => {
       const token = data.rzh_token;
       if (!token) {
+        console.log('[reviewzhealth background] No token found');
         sendResponse({ ok: false, error: 'Not authenticated' });
         return;
       }
 
       try {
+        console.log('[reviewzhealth background] Sending review to API:', message.review);
         const res = await fetch(`${API_BASE}/api/reviews/ingest`, {
           method: 'POST',
           headers: {
@@ -32,9 +34,18 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
           body: JSON.stringify(message.review),
         });
 
-        const data = await res.json();
-        sendResponse({ ok: res.ok, data });
+        const text = await res.text();
+        console.log('[reviewzhealth background] Response status:', res.status);
+        console.log('[reviewzhealth background] Response body:', text);
+
+        try {
+          const json = JSON.parse(text);
+          sendResponse({ ok: res.ok, data: json });
+        } catch {
+          sendResponse({ ok: false, error: text });
+        }
       } catch (e) {
+        console.log('[reviewzhealth background] Fetch error:', e.message);
         sendResponse({ ok: false, error: e.message });
       }
     });
@@ -57,15 +68,16 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
           authenticated: !!json?.user?.id,
           user: json?.user ?? null,
         });
-      } catch {
+      } catch (e) {
+        console.log('[reviewzhealth background] Status check error:', e.message);
         sendResponse({ authenticated: false });
       }
     });
     return true;
   }
+
 });
 
-// When extension is installed show a welcome notification
 chrome.runtime.onInstalled.addListener(() => {
   chrome.storage.local.set({ captured_count: 0 });
 });
